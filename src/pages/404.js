@@ -10,10 +10,11 @@ const Home = () => {
     </Firebase.Consumer>
   )
 }
+
 function HomePage({ user }) {
   return (
     <Layout>
-      <h1>Hello {user ? user.displayname : "world"}!</h1>
+      <h1>Page Not Found! Sorry {user ? user.displayname : "world"}!</h1>
       <p>
         {user ? (
           <>
