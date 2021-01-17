@@ -24,12 +24,25 @@ class Firebase extends Component {
     this.setState({ user: user })
   }
 
-  register = (email, password) => {
+  verifyEmailSend = user => {
+    user
+      .sendEmailVerification()
+      .then(function () {
+        console.log("Email sent.")
+      })
+      .catch(function (error) {
+        console.log(user)
+        console.log(error)
+      })
+  }
+
+  register = (email, password, username = null) => {
     this.state.firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(user => {
         this.setState({ user: user.user })
+        this.verifyEmailSend(user.user)
       })
       .catch(error => {
         //var errorCode = error.code
