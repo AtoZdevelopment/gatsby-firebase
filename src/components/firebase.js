@@ -54,6 +54,34 @@ class Firebase extends Component {
       })
   }
 
+  createUser = (user, userName = null) => {
+    const userRef = this.state.firebase.firestore().doc(`user/${user.uid}`)
+    userRef
+      .get()
+      .then(userSnap => {
+        if (userSnap.exists) {
+          console.log("User with this ID exists:", userRef.id)
+          console.log("User ", userSnap.data())
+        } else {
+          userRef
+            .set({
+              email: user.email,
+              id: user.uid,
+              userName: userName,
+            })
+            .then(
+              console.log("User Created: ", {
+                email: user.email,
+                id: user.uid,
+                userName: userName,
+              })
+            )
+            .catch(error => console.log(error))
+        }
+      })
+      .catch(error => console.log(error))
+  }
+
   register = (email, password, username = null) => {
     this.state.firebase
       .auth()
@@ -61,6 +89,7 @@ class Firebase extends Component {
       .then(user => {
         this.setState({ user: user.user })
         this.updateProfile(user.user, username)
+        this.createUser((user.user, username))
         this.verifyEmailSend(user.user)
       })
       .catch(error => {
@@ -107,6 +136,7 @@ class Firebase extends Component {
           register: this.register,
           login: this.login,
           logout: this.logout,
+          createUser: this.createUser,
         }}
       >
         {this.props.children}

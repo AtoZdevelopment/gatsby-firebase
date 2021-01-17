@@ -1,5 +1,6 @@
 import app from "firebase/app"
 import auth from "firebase/auth"
+import firestore from "firebase/firestore"
 
 export const isBrowser = () => typeof window !== "undefined"
 
