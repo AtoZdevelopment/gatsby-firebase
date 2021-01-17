@@ -36,12 +36,31 @@ class Firebase extends Component {
       })
   }
 
+  updateProfile = (user, userName = null, profilePic = null) => {
+    let profile = {}
+    if (userName !== null && userName !== "") {
+      profile.displayName = userName
+    }
+    if (profilePic !== null && profilePic !== "") {
+      profile.photoURL = profilePic
+    }
+    user
+      .updateProfile(profile)
+      .then(() => {
+        console.log("Profile Updated")
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
   register = (email, password, username = null) => {
     this.state.firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(user => {
         this.setState({ user: user.user })
+        this.updateProfile(user.user, username)
         this.verifyEmailSend(user.user)
       })
       .catch(error => {

@@ -17,7 +17,7 @@ function RegisterForm({ register }) {
 
   const handleSubmit = event => {
     event.preventDefault()
-    register(email, password)
+    register(email, password, username)
   }
 
   return (
