@@ -99,6 +99,15 @@ class Firebase extends Component {
       })
   }
 
+  verifyEmail = code => {
+    console.log(this.state)
+    this.state.firebase
+      .auth()
+      .applyActionCode(code)
+      .then(console.log("Verified"))
+      .catch(error => console.log(error))
+  }
+
   login = (email, password) => {
     this.state.firebase
       .auth()
@@ -133,6 +142,7 @@ class Firebase extends Component {
         value={{
           ...this.state,
           register: this.register,
+          verifyEmail: this.verifyEmail,
           login: this.login,
           logout: this.logout,
           createUser: this.createUser,

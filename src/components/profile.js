@@ -1,10 +1,10 @@
 import React from "react"
 import Firebase from "./firebase"
 
-const Profile = () => {
+const Profile = props => {
   return (
     <Firebase.Consumer>
-      {firebase => <ProfileInner {...firebase} />}
+      {firebase => <ProfileInner {...firebase} {...props} />}
     </Firebase.Consumer>
   )
 }

@@ -6,12 +6,12 @@ import Profile from "../components/profile"
 import Login from "../components/login"
 import Register from "../components/register"
 
-const App = () => (
+const App = ({ location }) => (
   <Layout>
     <Router>
       <PrivateRoute path="/app/profile" component={Profile} />
       <Login path="/app/login" />
-      <Register path="/app/register" />
+      <Register path="/app/register" params={location.search} />
     </Router>
   </Layout>
 )
