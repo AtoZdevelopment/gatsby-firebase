@@ -47,34 +47,34 @@ class Firebase extends Component {
       .updateProfile(profile)
       .then(() => {
         console.log("Profile Updated")
+        console.log(user)
       })
       .catch(error => {
         console.log(error)
       })
   }
 
-  createUser = (user, userName = null) => {
-    const userRef = this.state.firebase.firestore().doc(`user/${user.uid}`)
+  createMember = (user, userName = null) => {
+    const userRef = this.state.firebase.firestore().doc(`member/${user.uid}`)
+    const member = this.state.member
+      ? this.state.member
+      : {
+          email: user.email,
+          id: user.uid,
+          userName: userName,
+        }
+    this.setState(member)
+
     userRef
       .get()
-      .then(userSnap => {
-        if (userSnap.exists) {
-          console.log("User with this ID exists:", userRef.id)
-          console.log("User ", userSnap.data())
+      .then(memberSnap => {
+        if (memberSnap.exists) {
+          console.log("Member with this ID exists:", userRef.id)
+          console.log("Member ", memberSnap.data())
         } else {
           userRef
-            .set({
-              email: user.email,
-              id: user.uid,
-              userName: userName,
-            })
-            .then(
-              console.log("User Created: ", {
-                email: user.email,
-                id: user.uid,
-                userName: userName,
-              })
-            )
+            .set(this.state.member)
+            .then(console.log("Member Created: ", member))
             .catch(error => console.log(error))
         }
       })
