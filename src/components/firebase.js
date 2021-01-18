@@ -6,14 +6,13 @@ import { getFirebase } from "../util/firebase"
 const { Consumer, Provider } = React.createContext(`firebase`)
 
 class Firebase extends Component {
-  state = {}
+  state = { firebase: getFirebase() }
   subscriber = undefined
 
   componentDidMount() {
-    let firebase = getFirebase()
-    this.subscriber = firebase.auth().onAuthStateChanged(this.setUser)
-
-    this.setState({ firebase: firebase })
+    this.subscriber = this.state.firebase
+      .auth()
+      .onAuthStateChanged(this.setUser)
   }
 
   componentWillUnmount() {
